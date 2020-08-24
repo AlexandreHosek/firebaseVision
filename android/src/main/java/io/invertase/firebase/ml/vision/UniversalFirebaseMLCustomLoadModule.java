@@ -72,6 +72,18 @@ class UniversalFirebaseMLCustomLoadModule extends UniversalFirebaseModule {
               });
 
       this.semaphore.acquire();
+
+      FirebaseModelManager.getInstance().isModelDownloaded(remoteModel)
+        .addOnSuccessListener(new OnSuccessListener<Boolean>() {
+          private Semaphore semaphore2 = semaphore;
+          @Override
+          public void onSuccess(Boolean isDownloaded) {
+            statusDownload.add(isDownloaded);
+            this.semaphore2.release();
+          }
+        });
+
+      this.semaphore.acquire();
       return statusDownload.get(0);
     });
   }
