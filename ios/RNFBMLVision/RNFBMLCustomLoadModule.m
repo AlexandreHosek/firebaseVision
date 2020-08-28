@@ -40,7 +40,6 @@ RCT_EXPORT_METHOD(customModelLoadModel:
     } else {
         resolve(@false);
     }
-
 }
 
 @end
